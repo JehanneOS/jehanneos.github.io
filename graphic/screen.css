@@ -1,0 +1,76 @@
+/*RESET*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;} body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after, q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;} del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
+
+/*MAIN*/
+body { 
+	font-size: 1.05em;
+	line-height: 1.25em;
+	font-family: Helvetica Neue, Helvetica, Arial;
+	background: #f9f9f9;
+	color: #555;
+}
+#home-contents {
+	display: block;
+	background:url('/graphic/jehanne600x479.png') no-repeat 0% 23px;
+	padding-top: 300px;
+	margin: auto;
+    width: 600px;
+}
+#home-contents dl {
+	margin-left: 150px;
+	width: 350px;
+}
+#home-contents dt {
+	margin-top: 1em;
+	font-weight: bold;
+}
+#home-contents dd {
+	padding-left: 2em;
+}
+
+body.page {}
+
+body.page header {
+	display: block;
+	clear: both;
+	margin: auto;
+	padding-top: 25px;
+	width: 600px;
+	height: 150px;
+}
+
+a#logo {
+	display: block;
+	float: left;
+	width: 125px;
+	height: 100px;
+	background:url('/graphic/jehanne125x100.png') no-repeat 0 0;
+	margin-right: 30px;
+	text-decoration: none;
+}
+a#logo span {
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
+	display:block;
+	margin-top: 55px;
+	margin-left: 60px;
+}
+
+header h1 {
+	display: block;
+	padding: 0.8em;
+	font-size: 1.5em;
+	line-height: 1.8em;
+	text-align: right;
+}
+
+div.contents {
+	display: block;
+	clear: both;
+	margin: auto;
+	width: 600px;
+}
+
+div.contents p {
+	margin-top: 0.5em;
+}

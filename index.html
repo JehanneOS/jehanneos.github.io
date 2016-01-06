@@ -1,6 +1,11 @@
+---
+layout: nil
+title: Development log
+---
 <html>
 	<head>
 		<title>Jehanne</title>
+		<link rel="alternate" type="application/atom+xml" title="Development log"  href="/atom.xml" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="keywords" content="Jehanne, Plan 9, Open Source, 9P, 9P2000, Inferno, Unix">
 		<meta name="description" content="Jehanne, an operating system derived from Plan9.">
@@ -14,27 +19,33 @@
 				<dd>
 					<a href="/pages/wip.html">overview</a>, 
 					<a href="/pages/wip.html">screenshot</a>,
-					<a href="/pages/wip.html">Joan</a>
+					<a href="/pages/joan.html">Joan</a>
 				</dd>
 				<dt>Documentation</dt>
 				<dd>
-					<a href="/pages/wip.html">news</a>,
-					<a href="/pages/wip.html">issues</a>,
+					<a href="https://github.com/JehanneOS/jehanne/issues">issues</a>,
 					<a href="/pages/wip.html">manual pages</a>,
 					<a href="/pages/wip.html">hacking</a>,
 					<a href="/pages/wip.html">more...</a>
 				</dd>
+				<dt>News</dt>
+				<dd>
+{% for post in site.posts %}
+{% if post.public %}
+					<span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a><br/>
+{% endif %}  
+{% endfor %}
 				</dd>
 				<dt>Downloads</dt>
 				<dd>
 					<a href="/pages/wip.html">build notes</a>,
-					<a href="/pages/wip.html">browse the source</a>
+					<a href="https://github.com/JehanneOS/jehanne">browse the source</a>
 				</dd>
 				<dt>Related Resources</dt>
 				<dd>
 					<a href="/pages/wip.html">community</a>,
-					<a href="/pages/wip.html">mailing lists</a>,
-					<a href="/pages/wip.html">Plan 9</a>,
+					<a href="https://groups.google.com/forum/#!forum/jehanneos">mailing lists</a>,
+					<a href="http://plan9.bell-labs.com/plan9/">Plan 9</a>,
 					<a href="/pages/wip.html">Harvey</a>,
 				</dd>
 			</dl>

@@ -10,7 +10,7 @@
 {% endif %}
 
   <title>Jehanne Operating System</title>
-  
+
     <meta property="og:site_name" content="Jehanne Operating System"/>
     <meta property="og:title" content="{{ page.title }}"/>
     <meta property="og:url" content="http://jehanne.io{{ page.url }}"/>
@@ -24,6 +24,9 @@
 
 	<!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<link rel="stylesheet" type="text/css" href="/graphic/screen.css" />
+{% if page.css %}
+	<link rel="stylesheet" type="text/css" href="/graphic/{{ page.css }}" />
+{% endif %}
 </head>
 <body class="page">
 	<header>

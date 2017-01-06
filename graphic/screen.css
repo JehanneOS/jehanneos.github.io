@@ -119,3 +119,15 @@ div.contents h2 {
 	background-color: #FFBABA;
 	background-image: url('/graphic/error.png');
 }
+
+a#atom {
+	color: #555;
+	text-decoration: none;
+}
+a#atom:hover {
+	text-decoration: underline;
+}
+
+a#atom i {
+	margin-right: 5px;
+}

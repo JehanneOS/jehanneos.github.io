@@ -49,13 +49,13 @@ about it.
 
 These are my rules of thumb:
 
-1. **Keep it simple**  
-   Never add features just because you can. Remove redundant features.
-   Decouple unrelated features. Use obvious names for files and folders.
-2. **Encapsulate**  
-   Use properly scoped functions to access structures' members.
-3. **Do not abstract**  
-   Replace abstractions used less than 3 times. Remove unused code.
+**Keep it simple**  
+: Never add features just because you can. Remove redundant features.
+  Decouple unrelated features. Use obvious names for files and folders.
+**Encapsulate**  
+: Use properly scoped functions to access structures' members.
+**Do not abstract**  
+: Replace abstractions used less than 3 times. Remove unused code.
 
 Aestetics
 ---------

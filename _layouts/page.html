@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="cache-control" content="no-cache" />
+{% if page.description %}
+    <meta name="description" content="{{ page.description }}"/>
+{% else %}
+    <meta name="description" content="Jehanne - {{ page.title }}"/>
+{% endif %}
+
+  <title>Jehanne Operating System</title>
+
+    <meta property="og:site_name" content="Jehanne Operating System"/>
+    <meta property="og:title" content="{{ page.title }}"/>
+    <meta property="og:url" content="http://jehanne.io{{ page.url }}"/>
+    <meta property="og:type" content="article"/>
+{% if page.image %}
+    <meta property="og:image" content="{{ page.image }}"/>
+{% endif %}
+{% if page.video %}
+    <meta property="og:video" content="{{ page.video }}"/>
+{% endif %}
+
+	<!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link rel="stylesheet" type="text/css" href="/graphic/screen.css" />
+{% if page.css %}
+	<link rel="stylesheet" type="text/css" href="/graphic/{{ page.css }}" />
+{% endif %}
+</head>
+<body class="page">
+	<header>
+		<a href="/" id="logo"><span>home</span></a>
+		<h1>{{ page.title }}</h1>
+	</header>
+	<div class="contents">
+
+{{ content }}
+
+	</div>
+</body>
+</html>

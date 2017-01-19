@@ -7,3 +7,10 @@ authors:
     web: http://www.tesio.it/
     twitter: giacomo.tesio
     github: Shamar
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "page"

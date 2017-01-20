@@ -1,0 +1,14 @@
+---
+layout: post
+title: Hacking
+public: true
+author: giacomo
+---
+
+I've just published the [Hacking section of the manual].
+
+Hacking Jehanne is simple and funny! 
+
+Give it a try!
+
+[Hacking section of the manual]: http://jehanne.io/doc/hacking/overview.html

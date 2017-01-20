@@ -1,5 +1,5 @@
 /*RESET*/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dt, dl, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;} body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after, q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;} del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dt, dl, dd, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;} body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after, q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;} del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
 
 /*MAIN*/
 body { 
@@ -72,11 +72,11 @@ div.contents {
 }
 
 div.contents dt {
-	margin-left: 2em;
+	margin: 1em;
 }
 
 div.contents dd {
-	margin-left: 5em;
+	margin-left: 3em;
 }
 
 div.contents p {
@@ -102,30 +102,10 @@ div.contents ul li {
 	padding:initial
 }
 
-div.contents ol {
-	margin:1em;
-	margin-left:2em; 
-	list-style:initial; 
-}
-div.contents ol li {
-	margin:initial; 
-	padding:initial
-}
-
 div.contents dl {
-	margin:1em;
-	margin-left:2em; 
-	list-style:initial; 
+	margin-top:1em;
+	margin-bottom:1em; 
 }
-div.contents dl dt {
-	margin:initial; 
-	padding:initial
-}
-div.contents dl dd {
-	margin:initial; 
-	padding:initial
-}
-
 
 div.contents pre {margin: 20px;}
 

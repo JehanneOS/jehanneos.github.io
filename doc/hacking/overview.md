@@ -52,8 +52,10 @@ These are my rules of thumb:
 **Keep it simple**  
 : Never add features just because you can. Remove redundant features.
   Decouple unrelated features. Use obvious names for files and folders.
+
 **Encapsulate**  
 : Use properly scoped functions to access structures' members.
+
 **Do not abstract**  
 : Replace abstractions used less than 3 times. Remove unused code.
 
@@ -327,18 +329,30 @@ Custom Go tools
 Here is a brief summary of the other custom tools in
 `./hacking/src/jehanne/cmd/`:
 
-* `runqemu` runs Jehanne in a qemu instance and send commands to it.
+`runqemu` 
+: runs Jehanne in a qemu instance and send commands to it.
   It is used both during compilation (to create the initial ram disk,
   for example) and to run [quality checks].
-* `ksyscalls` and `usyscalls` produce the boring code for system calls,
+
+`ksyscalls` and `usyscalls`
+: produce the boring code for system calls,
   in kernel and in libc respectively. It reads [sysconf.json].
-* `mksys` produces several headers reading from the [sysconf.json] too
-* `data2c` and `elf2c` embeed in programs in kernels (mainly in the
-  workhorse).
-* `fetch` downloads external resources listed in [a fetch.json file]
-* `telnet` can connect a running instance of Jehanne.
+
+`mksys`
+: produces several headers reading from the [sysconf.json] too
+
+`data2c` and `elf2c`
+: embeed in programs in kernels (mainly in the workhorse).
+
+`fetch`
+: downloads external resources listed in [a fetch.json file]
+
+`telnet`
+: can connect a running instance of Jehanne.
   It was used before drawterm was available.
-* `preen` pretty print the JSON files used by `build`
+
+`preen`
+: pretty print the JSON files used by `build`
 
 Inside the development shell, these tools are available in `$PATH`.
 

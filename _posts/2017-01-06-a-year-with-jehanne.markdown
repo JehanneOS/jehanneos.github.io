@@ -137,8 +137,6 @@ A system for which I don't need browsers to host apps.
 
 It might well be just a daydream, but my [nightly journey] continues.
 
-<div style="margin-bottom:70px">&nbsp;</div>
-
 [devtools]: https://github.com/JehanneOS/devtools/
 [Inferno]: http://www.vitanuova.com/inferno/
 [9front]: http://9front.org/

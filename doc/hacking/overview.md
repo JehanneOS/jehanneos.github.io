@@ -1,5 +1,5 @@
 ---
-title: Jehanne Operating System
+title: Hacking Jehanne
 ---
 
 Jehanne is a work in progress that still needs a lot of effort to become

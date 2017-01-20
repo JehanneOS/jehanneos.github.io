@@ -1,5 +1,6 @@
-Hacking Jehanne
-===============
+---
+title: Jehanne Operating System
+---
 
 Jehanne is a work in progress that still needs a lot of effort to become
 useful.
@@ -75,7 +76,7 @@ The conventions I try to honor are:
 
 3.  Format blocks like these:
 
-    ~~~ c
+    ```c
         if(x == nil)
         	do_something();
         
@@ -96,18 +97,18 @@ The conventions I try to honor are:
         	...
         	break;
         }
-    ~~~
+    ```
 
 4.  Format functions like this:
 
-    ~~~ c
+    ```c
         /* will wlock/wunlock pool_lock */
         static void
         freelist_add(ImagePointer ptr, ElfImage *img)
         {
         	...
         }
-    ~~~
+    ```
 
 5.  Use one space around `=`  `+`  `-`  `<`  `>`  `*`  `/`  `%`  
     `|`  `&`  `^`  `<=`  `>=`  `==`  `!=`  `?`  `:`, but no space between

@@ -102,6 +102,16 @@ div.contents ul li {
 	padding:initial
 }
 
+div.contents ol {
+	margin:1em;
+	margin-left:2em; 
+	list-style:initial; 
+}
+div.contents ol li {
+	margin:initial; 
+	padding:initial
+}
+
 div.contents dl {
 	margin:1em;
 	margin-left:2em; 

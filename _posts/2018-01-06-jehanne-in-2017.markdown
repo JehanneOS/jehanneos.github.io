@@ -1,0 +1,107 @@
+---
+layout: post
+title: Jehanne in 2017
+public: true
+author: giacomo
+css: 20170106.css
+---
+Another year is gone with Jehanne.
+
+Here is a little report of what has been done (in no particular order):
+
+- everybody's copyrights have been made explicit and hopefully correct
+- several bugs have been fixed (and probably more introduced)
+- kernel options management has been simplified
+- boot assembly has been rewritten
+- swap support have been removed
+- MCACHE support for mount has been removed
+- various improvements have been imported from 9front (MMU management,
+  PCI, AHCI, interruptible locks...) and 9front's pstree has been ported
+- the `awake` system call has been generalized to interrupt several
+  blocking syscalls, even during note handling
+- `tsemacquire` has been moved to libc (in around 15 lines)
+- no `rendezvous` can occur at the tag ~0
+- the names of the procedures provided by the native C library has been
+  prefixed with "jehanne_", to define a namespace that avoid collisions
+  with other C libraries (so that new programs can use for example
+  both a POSIX C library and the Jehanne's libc)
+- the name space of a process you own can be cloned writing "clone"
+  to its /proc/$pid/ns
+- [LibPOSIX](https://github.com/JehanneOS/jehanne/blob/8ed3e74c3fa05fcbdd985fb3de59e9baee38f12f/sys/src/lib/posix/environment.c)
+  has been introduced
+- RedHat's newlib has been ported to Jehanne on top of LibPOSIX
+- [MirBSD Korn Shell](http://mirbsd.de/mksh) has been ported
+  to Jehanne on top of newlib
+
+Some of these changes are more heretic than others, but all are designed
+to make the system simpler and more useful at the same time.
+
+The generalization of awake allows the implementation in userspace
+of a wide range of features usually found in unix kernels.  
+For example, LibPOSIX can use it to provide non blocking I/O and to
+implement sigtimedwait.
+
+The removal of swap and mount(MCACHE) simplifies the kernel
+and increases security.
+
+# MirBSD Korn Shell
+
+Despite the various tests I wrote for newlib, I wanted a real world
+application to check the quality of LibPOSIX.
+
+I choose [mksh](http://mirbsd.de/mksh) for two reasons:
+
+1. it's simple and powerful
+2. it's developed by a great hacker that
+   [actively helped me](https://github.com/MirBSD/mksh/commit/9f3c0efefcc086f42dc31eca3a5b4d101cf6c85c)
+   even to understand the weird semantics I had to implement
+
+Thanks Thorsten!
+
+If you want to give it a try, run in rio: `vt sys/posixly mksh -l`.
+
+(to get rio on boot: `cp /arch/rc/lib/startup/terminal /cfg/startup`)
+
+# New year's resolutions for 2018
+
+## Funny ones:
+
+- ~~keep stealing from 9front~~ improve hardware support
+- add O_NONBLOCK support to LibPOSIX (and newlib) on top of the `awake`
+  system call
+- draft the new file protocol that will replace both HTTP and 9P2000
+- move the existing 9P2000 server to this new protocol
+- create new file servers to read/write at least Linux Ext2 and NTFS
+  with the new protocol
+
+## Duties:
+- write about the `awake` system call (as promised one year ago)
+- write ~~what I want to forget~~ about LibPOSIX
+- write or port a package manager
+- port GCC and friends on top of newlib/LibPOSIX
+- turn Jehanne in a self-hosted OS
+- write documentation and manual
+- add screenshots to the website
+- more tests
+
+## Under evaluation:
+- port pkgsrc
+- port [discount](http://www.pell.portland.or.us/~orc/Code/discount/)
+- port musl
+- port ncurses
+- port vim
+- port [OBNC](http://miasap.se/obnc/) (and replace Go with Wirth's Oberon-07)
+- port... more Free Software
+
+## Boring task:
+- write the equivalent of lib9p for the new file protocol
+- write an alarm file server on top of the new file protocol and remove
+  `alarm` from the kernel
+- fix bugs
+
+## Real promises:
+- more crazy ideas
+- break the build
+- sleep
+
+Who guess what will be actually done?

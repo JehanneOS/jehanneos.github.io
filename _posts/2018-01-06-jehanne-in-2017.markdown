@@ -3,9 +3,14 @@ layout: post
 title: Jehanne in 2017
 public: true
 author: giacomo
+image: /graphic/screenshot-20180106.png
 css: 20170106.css
 ---
 Another year is gone with Jehanne.
+
+<a href="/graphic/screenshot-20180106.png" target="_blank" title="Jehanne, click to enlarge">
+	<img src="/graphic/screenshot-20180106.png" style="width: 600px"/>
+</a>
 
 Here is a little report of what has been done (in no particular order):
 
@@ -19,7 +24,8 @@ Here is a little report of what has been done (in no particular order):
   PCI, AHCI, interruptible locks...) and 9front's pstree has been ported
 - the `awake` system call has been generalized to interrupt several
   blocking syscalls, even during note handling
-- `tsemacquire` has been moved to libc (in around 15 lines)
+- `tsemacquire` has been moved to libc (in less than
+  [15 lines](https://github.com/JehanneOS/jehanne/blob/79f8204/sys/src/lib/c/9sys/tsemacquire.c#L22-L36))
 - no `rendezvous` can occur at the tag ~0
 - the names of the procedures provided by the native C library has been
   prefixed with "jehanne_", to define a namespace that avoid collisions

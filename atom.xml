@@ -25,7 +25,11 @@ layout: nil
 
   <entry>
     <id>http://jehanne.io{{ post.id }}</id>
+{%   if post.external %}
+    <link type="text/html" rel="alternate" href="{{ post.external }}"/>
+{%   else %}
     <link type="text/html" rel="alternate" href="http://jehanne.io{{ post.url }}"/>
+{%   endif %}
     <title>{{ post.title }}</title>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
     <author>

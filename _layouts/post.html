@@ -11,6 +11,10 @@
 
   <title>Jehanne Operating System</title>
 
+{% if page.keywords %}
+    <meta name="keywords" content="{{ page.keywords }}"/>
+{% endif %}
+
     <meta property="og:site_name" content="Jehanne Operating System"/>
     <meta property="og:title" content="{{ page.title }}"/>
     <meta property="og:url" content="http://jehanne.io{{ page.url }}"/>

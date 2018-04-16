@@ -1,6 +1,6 @@
 ---
 layout: post
-title: MirBSD's Korn Shell on Jehanne
+title: Mksh on Jehanne
 public: true
 author: giacomo
 image: /graphic/screenshot-20180106.png

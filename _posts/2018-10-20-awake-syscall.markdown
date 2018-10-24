@@ -18,4 +18,15 @@ several pending processes, improving the illusion of
 single processor machines.
 
 Nevertheless, processes were still able to yield control of the CPU to
-the kernel by calling any [system call](https://en.wikipedia.org/wiki/System_call).
+the kernel during a [time-slice](https://en.wikipedia.org/wiki/Preemption_(computing)#Time_slice)
+by calling any [system call](https://en.wikipedia.org/wiki/System_call).
+
+System calls are often distinguished into blocking or non-blocking
+depending on the probability that the kernel will return the control
+to the calling process' code before the next tick.
+
+In real world, non-blocking syscalls might block the process and
+blocking syscalls might not block at all: it all depends on
+implementation details and on the state of the system at run-time.
+
+Classical examples of 

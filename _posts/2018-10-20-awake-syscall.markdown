@@ -42,8 +42,23 @@ process. Soon programmers realized that "not completely predictable"
 can also mean "it could never happen" and looked for ways to ask the
 CPU back after a while.
 
-To this aim Unix introduced signals and services like
+To this aim Unix introduced [signals](https://en.wikipedia.org/wiki/Signal_(IPC))
+and services like
 [alarm](http://pubs.opengroup.org/onlinepubs/9699919799/functions/alarm.html) and
 [setitimer](http://pubs.opengroup.org/onlinepubs/9699919799/functions/setitimer.html)
 to give back control to the calling process on certain events or after
-a time out. 
+a certain time.
+
+Later, additional syscalls like [select](https://idea.popcount.org/2016-11-01-a-brief-history-of-select2/),
+[poll](http://pubs.opengroup.org/onlinepubs/7908799/xsh/poll.html)
+and [kqueue](https://www.freebsd.org/cgi/man.cgi?query=kqueue&sektion=2)
+were added to handle I/O blocking syscalls with timeouts, and
+[sigtimedwait](https://linux.die.net/man/2/sigtimedwait) was added to
+block until a signal arrives or the timeouts expires.
+
+# Plan 9 from Bell Labs
+
+Compared to the [400 system calls](http://man7.org/linux/man-pages/man2/syscalls.2.html)
+of Linux, Plan 9 is [way simpler](http://aiju.de/plan_9/plan9-syscalls)
+but it still supports `sleep`, `alarm` and a version of semaquire with
+timeout.  

@@ -31,34 +31,58 @@ Classical examples of blocking system calls are
 - `read` that would block until a chunk of data is available
 - `write` that would block on a pipe without enough space for the new data
 
+# CPU control and time
+
 Sleep is a very interesting syscall because its whole point is just to
-yield the CPU for a while, so that other processes can use it: it's
-basically a tool for cooperative multitasking in a OS supporting
+yield the CPU for a while, so that other processes can use it.
+Its main use case is to poll for a certain resource to become available
+without subtracting computing power that could be used to produce such
+resource: it's a tool for cooperative multitasking in a OS supporting
 preemptive multitasking.
 
-Other blocking system calls (like wait, read and write) depends on an
-external, not completely predictable,, event to return control to the
-process. Soon programmers realized that "not completely predictable"
-can also mean "it could never happen" and looked for ways to ask the
-CPU back after a while.
+Other blocking system calls (like wait, read and write) depend on
+external events to return control to the process.
+Soon programmers realized that an external event might never occur
+and designed ways to book a time slice in the future.
 
-To this aim Unix introduced [signals](https://en.wikipedia.org/wiki/Signal_(IPC))
+Unix introduced [signals](https://en.wikipedia.org/wiki/Signal_(IPC))
 and services like
 [alarm](http://pubs.opengroup.org/onlinepubs/9699919799/functions/alarm.html) and
 [setitimer](http://pubs.opengroup.org/onlinepubs/9699919799/functions/setitimer.html)
 to give back control to the calling process on certain events or after
 a certain time.
 
-Later, additional syscalls like [select](https://idea.popcount.org/2016-11-01-a-brief-history-of-select2/),
-[poll](http://pubs.opengroup.org/onlinepubs/7908799/xsh/poll.html)
-and [kqueue](https://www.freebsd.org/cgi/man.cgi?query=kqueue&sektion=2)
-were added to handle I/O blocking syscalls with timeouts, and
-[sigtimedwait](https://linux.die.net/man/2/sigtimedwait) was added to
-block until a signal arrives or the timeouts expires.
+Later, new syscalls like
+[select](https://idea.popcount.org/2016-11-01-a-brief-history-of-select2/),
+[poll](http://pubs.opengroup.org/onlinepubs/7908799/xsh/poll.html),
+[kqueue](https://www.freebsd.org/cgi/man.cgi?query=kqueue&sektion=2) or
+[sigtimedwait](http://pubs.opengroup.org/onlinepubs/9699919799/functions/sigtimedwait.html)
+were introduced with a timeout parameter from the very begining,
+but without a precise specification of the
+[complex interactions](https://sourceware.org/bugzilla/show_bug.cgi?id=15819)
+with existing timers.
 
 # Plan 9 from Bell Labs
 
 Compared to the [400 system calls](http://man7.org/linux/man-pages/man2/syscalls.2.html)
-of Linux, Plan 9 is [way simpler](http://aiju.de/plan_9/plan9-syscalls)
-but it still supports `sleep`, `alarm` and a version of semaquire with
-timeout.  
+of Linux, Plan 9's [API is rather simpler](http://aiju.de/plan_9/plan9-syscalls)
+but it still supports a bit of each time-control styles:
+
+- [sleep](http://man.9front.org/2/sleep) suspends the calling process
+  for a number of milliseconds specified by the argument.
+- [alarm](http://man.9front.org/2/sleep) causes an
+  [alarm note](http://man.9front.org/2/notify) to be sent to the
+  invoking process after a number of milliseconds.
+- [tsemacquire](http://man.9front.org/2/semacquire) only waits for a
+  number of meilliseconds to acquire a semaphore.
+
+By design, Plan 9 provides only a very limited support for
+non-blocking I/O (through `alarm`) and no support for
+[I/O multiplexing](https://notes.shichao.io/unp/ch6/):
+
+- if a program needs to **wait for several resources**, it usually calls
+  [rfork](http://man.9front.org/2/fork)
+- if a program want to **serve several concurrent clients**, it usually
+  expose a [9P2000 filesystem](http://man.9front.org/5/intro)
+
+This approach is rooted into the 

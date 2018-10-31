@@ -31,7 +31,7 @@ Classical examples of blocking system calls are
 - `read` that would block until a chunk of data is available
 - `write` that would block on a pipe without enough space for the new data
 
-# CPU control and time
+## CPU control and time
 
 Sleep is a very interesting syscall because its whole point is just to
 yield the CPU for a while, so that other processes can use it.
@@ -62,7 +62,7 @@ but without a precise specification of the
 [complex interactions](https://sourceware.org/bugzilla/show_bug.cgi?id=15819)
 with existing timers.
 
-# Plan 9 from Bell Labs
+## Plan 9 from Bell Labs
 
 Compared to the [400 system calls](http://man7.org/linux/man-pages/man2/syscalls.2.html)
 of Linux, Plan 9's [API is rather simpler](http://aiju.de/plan_9/plan9-syscalls)
@@ -85,4 +85,12 @@ non-blocking I/O (through `alarm`) and no support for
 - if a program want to **serve several concurrent clients**, it usually
   expose a [9P2000 filesystem](http://man.9front.org/5/intro)
 
-This approach is rooted into the 
+Furthermore, with [libthread](http://man.cat-v.org/9front/2/thread),
+Plan 9 provides an implementation of Hoare's
+[Comunicating Sequential Processes](http://www.usingcsp.com/cspbook.pdf)
+in which dedicated (preemptively scheduled) processes are used to issue
+any blocking system calls and several cooperatively-scheduled threads
+sharing memory in a single process are used to access global state.
+
+
+

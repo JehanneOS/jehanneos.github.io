@@ -57,10 +57,7 @@ Later, new syscalls like
 [poll](http://pubs.opengroup.org/onlinepubs/7908799/xsh/poll.html),
 [kqueue](https://www.freebsd.org/cgi/man.cgi?query=kqueue&sektion=2) or
 [sigtimedwait](http://pubs.opengroup.org/onlinepubs/9699919799/functions/sigtimedwait.html)
-were introduced with a timeout parameter from the very begining,
-but without a precise specification of the
-[complex interactions](https://sourceware.org/bugzilla/show_bug.cgi?id=15819)
-with existing timers.
+were introduced with a timeout parameter from the very begining.
 
 ## Plan 9 from Bell Labs
 
@@ -92,5 +89,13 @@ in which dedicated (preemptively scheduled) processes are used to issue
 any blocking system calls and several cooperatively-scheduled threads
 sharing memory in a single process are used to access global state.
 
+# Simplex Sigillum Veri
 
+The [complex interactions](https://sourceware.org/bugzilla/show_bug.cgi?id=15819)
+between the different time ways to book a time slice in Unix (and, to a
+lesser extent, in Plan 9) are direct conseguences of its
+[design philosophy](http://marmaro.de/docs/studium/unix-phil/unix-phil.pdf).
 
+As explained by Richard P. Gabriel in
+[his famous essay](https://www.dreamsongs.com/RiseOfWorseIsBetter.html),
+"Unix and C are the ultimate computer viruses".

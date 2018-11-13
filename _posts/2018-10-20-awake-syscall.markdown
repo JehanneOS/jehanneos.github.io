@@ -203,8 +203,8 @@ clock is (99%)^10. That is: their composition will do what you expect roughly **
 
 How many programs did you installed on your computer?
 
-If you are running 100 different programs good enough (aka correct 99%
-of times) the probability they whole system will do what you expect is 37%.
+**The probability that 100 programs with such quality running together will
+work as you expect is 37%**.
 
 In other words, by running 100 different programs that are "good enough"
-your computer can suck your soul out of you.
+**your computer can suck your soul out of you**.

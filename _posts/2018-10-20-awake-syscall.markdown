@@ -89,7 +89,7 @@ in which dedicated (preemptively scheduled) processes are used to issue
 any blocking system calls and several cooperatively-scheduled threads
 sharing memory in a single process are used to access global state.
 
-# Simplex Sigillum Veri
+# The Curse of Frankenstein
 
 The [complex interactions](https://sourceware.org/bugzilla/show_bug.cgi?id=15819)
 between the different ways to book a time slice in Unix (and, to a
@@ -158,7 +158,7 @@ majority of users' need well enough.
 The Unix philosophy spread beyond Unix, and it became the common wisdom
 of software engineering so far.
 
-For early Unix and Plan 9, it is.
+For early Unix and Plan 9, enough is enough.
 Look at 9front to see a modern system that follows this philosophy consistently.
 
 There is a catch, however.  
@@ -170,7 +170,7 @@ answering to the ever changing needs of [its users](http://cat-v.org/).
 Plan 9 is **one** application of computers.
 An operating system split into several executables, but still **one thing**.
 
-So in it's asynptotic path toward perfection, the whole system slowly
+So in its asymptotic path toward perfection, the whole system slowly
 progress together. When it provides 90% of required functionality, it
 really means 90%. Or 95%. Or 97%. Or 99%.
 
@@ -193,7 +193,7 @@ The operating system became a collection of variegate software,
 developed by a variety of teams, each with their own goals and taste
 and set of best practices.
 
-## The Curse of Frankenstein
+## More pieces, more cracks!
 
 Take one application that works correctly 99% of times, and you will be 
 fine 99% of times.
@@ -204,46 +204,119 @@ The probability that they work correctly together at each computer
 clock is (99%)^10. That is: their composition will do what you expect 
 roughly **90% of times**.
 
-How many programs did you installed on your computer?
+With such assumption, the probability of a system behaving correctly
+goes down pretty quickly approaching the formula *p(n) = (0.99)&#8319;*
 
-**The probability that 100 programs with such quality running together will
-work as you expect is 37%**.
+![Probability of whole system correctness.](/graphic/probability_of_correctness.png)
 
-In other words, by running 100 different programs that are "good enough"
-**your computer can suck your soul out of you**.
+How many programs are you running right now? :-D
 
-This is the curse of Frankenstein: more pieces increase fragility.
+This is the curse of Frankenstein: more pieces, more cracks.
 
-## Italian style
+## Simplex Sigillum Veri
 
-Plan 9 from Bell Labs followed the New Jersey style from the very beginning
-and still do so in most if it's incarnations.
+Plan 9 from Bell Labs followed the New Jersey style from the very
+beginning and still does so in most if it's incarnations.
 
 But what about Jehanne,
 [from Meucci's laboratory](https://www.theguardian.com/world/2002/jun/17/humanities.internationaleducationnews)?
 
-Turns out the design of Jehanne doesn't follow the New Jersey style. I have no rush.
+Turns out the design of Jehanne doesn't follow the New Jersey style.
+I have no rush. Yet Jehanne doesn't follow the MIT/Stanford style either.
 
-On the other hand, Jehanne doesn't follow the MIT/Stanford style either.
-
-The design of Jehanne follows a different principle: simplex sigillum veri.
-
-With Jehanne I'm looking for the smallest possible set of **orthogonal
-OS abstractions** that can be composed to provide a safe distributed
-computation the to the user.
-
-To compare this style with Worse-is-better, we can say that
+To follow Gabriel's scheme, we could say that Jehanne is based upon
 
 - **Simplicity**  
-  The design must be simple. If the implementation cannot be simple, the
-  design is not simple enough. 
+  The design must be simple. Few simple, easy to learn and orthogonal
+  abstractions should be able to describe any use case conceivable.
+  If the implementation is difficult, the design is not simple enough.
 - **Correctness**  
   The design should be correct in all observable aspects.
   Incorrectness is not allowed.
 - **Consistency**  
   The design must not be inconsistent.
-  Any inconsistency means that the design is not simple enough.
-- **Completeness**  
-  The design must cover as **few** important situations as practical and 
-  let the user compose the abstractions provided to build anything he needs.
+  Any inconsistency reveals a design problem: either a missing
+  abstraction or abstractions that are not orthogonal enough.
+- **Composability**  
+  Completeness should naturally emerge as a (desirable) side effect.
+  As such, it cannot be a goal: the design must cover as **few**
+  important situations as practical and let the user compose the
+  abstractions provided to build what he needs.
 
+I call this set of principles *simplex sigillum veri*.
+
+It's deeply inspired by the works of other Italian hackers,
+such as [Antonio Meucci](https://en.wikipedia.org/wiki/Antonio_Meucci),
+[Pier Giorgio Perotto](https://en.wikipedia.org/wiki/Programma_101),
+[Guglielmo Marconi](ttps://en.wikipedia.org/wiki/Pier_Giorgio_Perotto),
+[Renzo Piano](https://en.wikipedia.org/wiki/Renzo_Piano) and
+[Leonardo da Vinci](https://en.wikipedia.org/wiki/Leonardo_da_Vinci).
+
+# The Awake system call
+
+Plan 9 supports **39 system calls** (not counting obsolete ones).
+Since some system calls can be expressed in term of the others, in
+Jehanne I moved the duplicates in userspace.
+
+The idea is that a smaller kernel surface makes it easier to get it
+right and simple in the long run.
+
+In the process of this clean up, I realized that `sleep`, `alarm` and
+`tsemacquire` were somehow "ugly": I supposed that they were mixing
+orthogonal issues and looked for the missing abstraction they were hiding.
+
+This is how the `awake` syscall was born:
+
+```
+long awake(long milliseconds);
+```
+
+Awake is the complement of `sleep`: **it rents a time slice in the future**.
+It's a fundamental building block that can be used to implement in user
+space other services like `sleep`, `alarm` and `tsemacquire`.
+
+It interrupts a blocking syscall after `ms` milliseconds. On failure
+it returns 0. On success it returns a negative long that can be used
+as an identifier to release the time slice.
+
+In libc, two very simple functions wrap `awake` to enhance readability.
+
+
+```
+
+int
+jehanne_awakened(long wakeup)
+{
+	/* awake returns the ticks of the scheduled wakeup in negative,
+	 * thus a wakeup is in the past iff (-awake(0)) >= (-wakeup)
+	 *
+	 * NOTE: this is not a macro so that we can change the awake()
+	 * implementation in the future, without affecting the client code.
+	 */
+	assert(wakeup < 0);
+	return wakeup >= awake(0);
+}
+
+int
+jehanne_forgivewkp(long wakeup)
+{
+	/* awake returns the ticks of the scheduled wakeup in negative,
+	 * and is able to remove a wakeup provided such value.
+	 *
+	 * jehanne_forgivewkp() is just a wrapper to hide awake()'s details that
+	 * could change in the future and make client code easier to
+	 * read.
+	 *
+	 * NOTE: this is not a macro so that we can change the awake()
+	 * implementation in the future, without affecting the client code.
+	 */
+	assert(wakeup < 0);
+	return awake(wakeup);
+}
+```
+
+Awakened tells the calling process whether a certain wakeup already occurred.
+
+Forgivewkp tells the kernel to remove a certain wakeup.
+
+With these primitives we can easily implement in libc both sleep and tsemaquire:

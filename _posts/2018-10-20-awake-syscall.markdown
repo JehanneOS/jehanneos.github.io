@@ -130,7 +130,8 @@ consistency of interface.
 
 In a way the so called "New Jersey style" was a rush for a
 [minimum viable product](https://en.wikipedia.org/wiki/Minimum_viable_product)
-able to gain the
+able to minimize the 
+[time-to-market](https://en.wikipedia.org/wiki/Time_to_market) and to gain the
 [first mover advantage](https://en.wikipedia.org/wiki/First-mover_advantage).
 
 Quoting Gabriel
@@ -194,12 +195,14 @@ and set of best practices.
 
 ## The Curse of Frankenstein
 
-Take one application that works correctly 99% of times, and you will be fine 99% of times.
+Take one application that works correctly 99% of times, and you will be 
+fine 99% of times.
 
 But what if you have 10 applications each working correctly 99% of times?
 
 The probability that they work correctly together at each computer
-clock is (99%)^10. That is: their composition will do what you expect roughly **90% of times**.
+clock is (99%)^10. That is: their composition will do what you expect 
+roughly **90% of times**.
 
 How many programs did you installed on your computer?
 
@@ -208,3 +211,39 @@ work as you expect is 37%**.
 
 In other words, by running 100 different programs that are "good enough"
 **your computer can suck your soul out of you**.
+
+This is the curse of Frankenstein: more pieces increase fragility.
+
+## Italian style
+
+Plan 9 from Bell Labs followed the New Jersey style from the very beginning
+and still do so in most if it's incarnations.
+
+But what about Jehanne,
+[from Meucci's laboratory](https://www.theguardian.com/world/2002/jun/17/humanities.internationaleducationnews)?
+
+Turns out the design of Jehanne doesn't follow the New Jersey style. I have no rush.
+
+On the other hand, Jehanne doesn't follow the MIT/Stanford style either.
+
+The design of Jehanne follows a different principle: simplex sigillum veri.
+
+With Jehanne I'm looking for the smallest possible set of **orthogonal
+OS abstractions** that can be composed to provide a safe distributed
+computation the to the user.
+
+To compare this style with Worse-is-better, we can say that
+
+- **Simplicity**  
+  The design must be simple. If the implementation cannot be simple, the
+  design is not simple enough. 
+- **Correctness**  
+  The design should be correct in all observable aspects.
+  Incorrectness is not allowed.
+- **Consistency**  
+  The design must not be inconsistent.
+  Any inconsistency means that the design is not simple enough.
+- **Completeness**  
+  The design must cover as **few** important situations as practical and 
+  let the user compose the abstractions provided to build anything he needs.
+

@@ -205,7 +205,9 @@ clock is (99%)^10. That is: their composition will do what you expect
 roughly **90% of times**.
 
 With such assumption, the probability of a system behaving correctly
-goes down pretty quickly approaching the formula *p(n) = (0.99)&#8319;*
+goes down pretty quickly approaching the formula
+
+*p(n) = (0.99)&#8319;*
 
 ![Probability of whole system correctness.](/graphic/probability_of_correctness.png)
 

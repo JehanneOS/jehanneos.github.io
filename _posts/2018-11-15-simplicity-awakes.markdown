@@ -248,7 +248,7 @@ I call this set of principles *simplex sigillum veri*.
 It's deeply inspired by the works of other Italian hackers,
 such as [Antonio Meucci](https://en.wikipedia.org/wiki/Antonio_Meucci),
 [Pier Giorgio Perotto](https://en.wikipedia.org/wiki/Programma_101),
-[Guglielmo Marconi](ttps://en.wikipedia.org/wiki/Guglielmo_Marconi),
+[Guglielmo Marconi](https://en.wikipedia.org/wiki/Guglielmo_Marconi),
 [Renzo Piano](https://en.wikipedia.org/wiki/Renzo_Piano) and
 [Leonardo da Vinci](https://en.wikipedia.org/wiki/Leonardo_da_Vinci).
 

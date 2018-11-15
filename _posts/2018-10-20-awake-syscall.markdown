@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Simplicity awakes
-public: false
+public: true
 author: giacomo
 image: /graphic/screenshot-20180106.png
 ---

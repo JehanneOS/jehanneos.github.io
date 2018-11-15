@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Awake: wakeups in Jehanne
+title: Simplicity awakes
 public: false
 author: giacomo
 image: /graphic/screenshot-20180106.png
@@ -43,7 +43,7 @@ preemptive multitasking.
 Other blocking system calls (like wait, read and write) depend on
 external events to return control to the process.
 Soon programmers realized that an external event might never occur
-and designed ways to book a time slice in the future.
+and designed ways to mitigate the risks.
 
 Unix introduced [signals](https://en.wikipedia.org/wiki/Signal_(IPC))
 and services like
@@ -92,7 +92,7 @@ sharing memory in a single process are used to access global state.
 # The Curse of Frankenstein
 
 The [complex interactions](https://sourceware.org/bugzilla/show_bug.cgi?id=15819)
-between the different ways to book a time slice in Unix (and, to a
+between the different ways to handle timeouts in Unix (and, to a
 lesser extent, in Plan 9) are direct effects of its
 [design philosophy](http://marmaro.de/docs/studium/unix-phil/unix-phil.pdf).
 
@@ -271,52 +271,78 @@ This is how the `awake` syscall was born:
 long awake(long milliseconds);
 ```
 
-Awake is the complement of `sleep`: **it rents a time slice in the future**.
-It's a fundamental building block that can be used to implement in user
-space other services like `sleep`, `alarm` and `tsemacquire`.
+Awake is the complement of `sleep`: it **books a new time slice** in the future.
+It's a fundamental building block that can be used to implement
+other services in user space, like `sleep`, `alarm` and `tsemacquire`.
 
-It interrupts a blocking syscall after `ms` milliseconds. On failure
-it returns 0. On success it returns a negative long that can be used
-as an identifier to release the time slice.
+It interrupts a blocking syscall after a certain number of milliseconds.
+On failure it returns 0. On success it returns a negative long that can
+be used as an identifier to release the booked time slice.
 
-In libc, two very simple functions wrap `awake` to enhance readability.
+On wakeup, no note or signal is sent to the process, the process' error
+string left unchanged: the blocking syscall simply returns to the
+process with a `~0ULL` result.
 
+A process can register how many wakeups it want (within a global system cap)
+and each wake up will have a chance to interrupt a system call.
+
+Wakeups are booked in two distinct group that do not interact: normal
+process execution and note handlers. Such groups are automatically reset
+respectively on [exits](http://man.cat-v.org/9front/2/exits) and on
+[noted](http://man.cat-v.org/9front/2/notify).
+
+
+In libc,
+[two very simple functions](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/c/9sys/awakened.c)
+wrap `awake` to enhance readability.
+
+`Awakened` tells the calling process whether a certain wakeup already occurred.
+`Forgivewkp` tells the kernel to remove a certain wakeup.
+
+With these primitives it's trivial to move
+[sleep](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/c/9sys/sleep.c) and
+[tsemaquire](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/c/9sys/tsemacquire.c) to libc.
+
+In particular, `tsemaquire` shows pretty well the simple idiom of awake:
 
 ```
+	/* book a time slice in the future */
+	long wkup = awake(ms);
+	while(blocking_syscall() == -1){
+		if(jehanne_awakened(wkup)){
+			/* handle syscall timed out */
+		}
+		/* the syscall has been otherwise interrupted, you can
+		 * - try again
+		 * - fail with an error
+		 * - do whatever fit
+		 */
+	}
+	/* the syscall completed, release the booked time slice... */
+	jehanne_forgivewkp(wkup);
 
-int
-jehanne_awakened(long wakeup)
-{
-	/* awake returns the ticks of the scheduled wakeup in negative,
-	 * thus a wakeup is in the past iff (-awake(0)) >= (-wakeup)
-	 *
-	 * NOTE: this is not a macro so that we can change the awake()
-	 * implementation in the future, without affecting the client code.
-	 */
-	assert(wakeup < 0);
-	return wakeup >= awake(0);
-}
-
-int
-jehanne_forgivewkp(long wakeup)
-{
-	/* awake returns the ticks of the scheduled wakeup in negative,
-	 * and is able to remove a wakeup provided such value.
-	 *
-	 * jehanne_forgivewkp() is just a wrapper to hide awake()'s details that
-	 * could change in the future and make client code easier to
-	 * read.
-	 *
-	 * NOTE: this is not a macro so that we can change the awake()
-	 * implementation in the future, without affecting the client code.
-	 */
-	assert(wakeup < 0);
-	return awake(wakeup);
-}
+	/* ...and enjoy */
 ```
 
-Awakened tells the calling process whether a certain wakeup already occurred.
+(the attent reader will notice that
+[`alarm` is still waiting to be moved to user space](https://github.com/JehanneOS/jehanne/issues/2)...
+the fact is that it's too boring of a task!)
 
-Forgivewkp tells the kernel to remove a certain wakeup.
+To be fair, `awake` was originally designed to interrupt `rendezvous` only,
+to enable [timeouts support for QLock, RWLock and Rendez](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/c/9sys/qlock.c)
+in libc.
 
-With these primitives we can easily implement in libc both sleep and tsemaquire:
+But from the very beginning it was clear that it could have been
+generalized and composed with other system calls, to provide other services.
+
+With the advent of [libposix](https://github.com/JehanneOS/jehanne/tree/master/sys/src/lib/posix),
+I used `awake` to implement support for POSIX
+[non-blocking I/O](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/posix/files.c),
+[signals](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/posix/processes.c)
+and [sigset waiters](https://github.com/JehanneOS/jehanne/blob/master/sys/src/lib/posix/sigsets.c).
+
+Which in turn enabled the port of [newlib](http://jehanne.io/2018/01/06/jehanne-in-2017.html) and of
+[MirBSD Korn Shell](http://www.mirbsd.org/permalinks/wlog-10_e20180415-tg.htm)
+to Jehanne.
+
+All this with more or less [600 lines of code](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c).

@@ -3,7 +3,7 @@ layout: post
 title: Simplicity awakes
 public: true
 author: giacomo
-image: /graphic/screenshot-20180106.png
+image: /graphic/probability_of_correctness.png
 ---
 
 Preemptive multitasking is now more than 50 years old, initially

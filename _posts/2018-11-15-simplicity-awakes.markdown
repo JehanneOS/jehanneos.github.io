@@ -368,3 +368,23 @@ Not [all blocking system calls](https://github.com/JehanneOS/jehanne/blob/master
 can be interrupted though. `Create` is a notable example of a blocking
 system call that has been excluded from the interruptable ones, to prevent
 a timeout to leave an orphan file behind.
+
+# Issues and future uses
+
+Awake will be used to implement all timeouts of Jehanne's system calls.
+
+Even without libposix, it provides a simple mechanism to implement
+non-blocking I/O, if needed.
+
+And it will be used to implement timeouts in multiplexing I/O too.
+
+Unfortunately, as an interface to the kernel scheduler, `awake` doesn't
+work with user space schedulers that keep control of their own tasks.
+Right now, this just means that `qlockt`, `rlockt`, `wlockt` and `rsleept`
+cannot work when linking libthread. In the long run, it might make slightly
+more difficult to port virtual machines and programming languages that 
+provide their own scheduler in user space, like Go or Java.
+
+The solution however is already outlined by libthread usage of a custom 
+`rendezvous`: we will simply override the system call to give control to
+the desired scheduler.

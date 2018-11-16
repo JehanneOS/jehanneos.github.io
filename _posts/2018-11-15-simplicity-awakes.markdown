@@ -230,17 +230,17 @@ To follow Gabriel's scheme, we could say that Jehanne is based upon
 
 - **Simplicity**  
   The design must be simple. Few simple, easy to learn and orthogonal
-  abstractions should be able to describe any use case conceivable.
+  abstractions should be able to describe any use case conceivable.  
   If the implementation is difficult, the design is not simple enough.
 - **Correctness**  
-  The design should be correct in all observable aspects.
+  The design should be correct in all observable aspects.  
   Incorrectness is not allowed.
 - **Consistency**  
   The design must not be inconsistent.
   Any inconsistency reveals a design problem: either a missing
   abstraction or abstractions that are not orthogonal enough.
 - **Composability**  
-  Completeness should naturally emerge as a (desirable) side effect.
+  Completeness should naturally emerge as a (desirable) side effect.  
   As such, it cannot be a goal: the design must cover as **few**
   important situations as practical and let the user compose the
   abstractions provided to build what he needs.

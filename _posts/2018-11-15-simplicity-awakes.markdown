@@ -365,5 +365,6 @@ wakeups while the ringher is waiting for the process to be in an
 interruptible state.
 
 Not [all blocking system calls](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L76)
-can be interrupted though. `Create` is a notable example of a bloccking
-system call that has been excluded from the interruptable one. 
+can be interrupted though. `Create` is a notable example of a blocking
+system call that has been excluded from the interruptable ones, to prevent
+a timeout to get a file.

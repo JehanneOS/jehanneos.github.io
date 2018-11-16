@@ -164,14 +164,14 @@ Look at 9front to see a modern system that follows this philosophy consistently.
 There is a catch, however.  
 Plan 9 (like early Unix), is a system evolving as a whole.
 This is particularly visible in the [9front repository](http://code.9front.org/hg/plan9front/).
-The whole system evolve together, all programs are modified consistently,
+The whole system evolves together, all programs are modified consistently,
 answering to the ever changing needs of [its users](http://cat-v.org/).
 
 Plan 9 is **one** application of computers.
 An operating system split into several executables, but still **one thing**.
 
-So in its asymptotic path toward completeness, the whole system slowly
-progress together. When it provides 90% of required functionality, it
+So in its asymptotic path toward completeness, all pieces 
+progress together. When they provides 90% of required functionality, it
 really means 90%. Or 95%. Or 97%. Or 99%.
 
 But what if we split the system into independent components and assign

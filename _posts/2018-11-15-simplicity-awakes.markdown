@@ -170,7 +170,7 @@ answering to the ever changing needs of [its users](http://cat-v.org/).
 Plan 9 is **one** application of computers.
 An operating system split into several executables, but still **one thing**.
 
-So in its asymptotic path toward perfection, the whole system slowly
+So in its asymptotic path toward completeness, the whole system slowly
 progress together. When it provides 90% of required functionality, it
 really means 90%. Or 95%. Or 97%. Or 99%.
 
@@ -190,8 +190,8 @@ application developers**.
 However this process had a significant but overlooked drawback: the
 running operating system lose its unity, its coherence.
 The operating system became a collection of variegate software,
-developed by a variety of teams, each with their own goals and taste
-and set of best practices.
+developed by a variety of different teams, each with their own goals and
+taste and set of best practices.
 
 ## More pieces, more cracks!
 
@@ -263,7 +263,7 @@ Jehanne I moved the duplicates in userspace.
 The idea is that a smaller kernel surface makes it easier to get it
 right and simple in the long run.
 
-In the process of this clean up, I realized that `sleep`, `alarm` and
+During such clean up, I realized that `sleep`, `alarm` and
 `tsemacquire` were somehow "ugly": I supposed that they were mixing
 orthogonal issues and looked for the missing abstraction they were hiding.
 
@@ -278,7 +278,7 @@ It's a fundamental building block that can be used to implement
 other services in user space, like `sleep`, `alarm` and `tsemacquire`.
 
 It interrupts a blocking syscall after a certain number of milliseconds.
-On failure it returns 0. On success it returns a negative long that can
+On failure it returns `0`. On success it returns a negative long that can
 be used as an identifier to release the booked time slice.
 
 On wakeup, no note or signal is sent to the process, the process' error

@@ -348,3 +348,22 @@ Which in turn enabled the port of [newlib](http://jehanne.io/2018/01/06/jehanne-
 to Jehanne.
 
 All this with more or less [600 lines of code](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c).
+
+Two kernel processes, a [timer](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L471)
+and a [ringer](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L621),
+cooperate through a linked list
+of wakeups kept [in order of timeout](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L369) 
+that is filled by the system calls.
+On each [tick](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L447),
+if the first element of the registry is expired, the interrupt
+handler awake the timer, that prepare a collection of expired timers.
+
+Then the ringer start a loop to interrupt the process properly.
+
+These two different processes make it possible to keep processing new
+wakeups while the ringher is waiting for the process to be in an
+interruptible state.
+
+Not [all blocking system calls](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L76)
+can be interrupted though. `Create` is a notable example of a bloccking
+system call that has been excluded from the interruptable one. 

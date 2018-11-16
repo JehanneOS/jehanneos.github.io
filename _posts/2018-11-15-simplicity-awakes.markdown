@@ -177,7 +177,7 @@ really means 90%. Or 95%. Or 97%. Or 99%.
 But what if we split the system into independent components and assign
 them to different teams following the same philosophy?
 
-This is what slowly happened to mainstream operating systems.
+This is what happened to mainstream operating systems.
 
 With their widespread adoption, the variety of people needs couldn't be
 served anymore by a single company. Thus good APIs and development tools

@@ -57,7 +57,7 @@ Later, new syscalls like
 [poll](http://pubs.opengroup.org/onlinepubs/7908799/xsh/poll.html),
 [kqueue](https://www.freebsd.org/cgi/man.cgi?query=kqueue&sektion=2) or
 [sigtimedwait](http://pubs.opengroup.org/onlinepubs/9699919799/functions/sigtimedwait.html)
-were introduced with a timeout parameter from the very begining.
+were introduced with a timeout parameter from the very beginning.
 
 ## Plan 9 from Bell Labs
 
@@ -71,7 +71,7 @@ but it still supports a bit of each time-control styles:
   [alarm note](http://man.9front.org/2/notify) to be sent to the
   invoking process after a number of milliseconds.
 - [tsemacquire](http://man.9front.org/2/semacquire) only waits for a
-  number of meilliseconds to acquire a semaphore.
+  number of milliseconds to acquire a semaphore.
 
 By design, Plan 9 provides only a very limited support for
 non-blocking I/O (through `alarm`) and no support for
@@ -84,7 +84,7 @@ non-blocking I/O (through `alarm`) and no support for
 
 Furthermore, with [libthread](http://man.cat-v.org/9front/2/thread),
 Plan 9 provides an implementation of Hoare's
-[Comunicating Sequential Processes](http://www.usingcsp.com/cspbook.pdf)
+[Communicating Sequential Processes](http://www.usingcsp.com/cspbook.pdf)
 in which dedicated (preemptively scheduled) processes are used to issue
 any blocking system calls and several cooperatively-scheduled threads
 sharing memory in a single process are used to access global state.
@@ -326,7 +326,7 @@ In particular, `tsemaquire` shows pretty well the simple idiom of awake:
 	/* ...and enjoy */
 ```
 
-(the attent reader will notice that
+(the mindful reader will notice that
 [`alarm` is still waiting to be moved to user space](https://github.com/JehanneOS/jehanne/issues/2)...
 the fact is that it's too boring of a task!)
 
@@ -352,7 +352,7 @@ All this with more or less [600 lines of code](https://github.com/JehanneOS/jeha
 Two kernel processes, a [timer](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L471)
 and a [ringer](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L621),
 cooperate through a linked list
-of wakeups kept [in order of timeout](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L369) 
+of wakeups kept [in order of expiration](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L369) 
 that is filled by the system calls.
 On each [tick](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L447),
 if the first element of the registry is expired, the interrupt
@@ -361,12 +361,12 @@ handler awake the timer, that prepare a collection of expired timers.
 Then the ringer start a loop to interrupt the process properly.
 
 These two different processes make it possible to keep processing new
-wakeups while the ringher is waiting for the process to be in an
+wakeups while the ringer is waiting for the process to be in an
 interruptible state.
 
 Not [all blocking system calls](https://github.com/JehanneOS/jehanne/blob/master/sys/src/kern/port/awake.c#L76)
 can be interrupted though. `Create` is a notable example of a blocking
-system call that has been excluded from the interruptable ones, to prevent
+system call that has been excluded from the interruptible ones, to prevent
 a timeout to leave an orphan file behind.
 
 # Issues and future uses

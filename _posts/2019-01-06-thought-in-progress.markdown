@@ -80,8 +80,8 @@ We need a generation of **hackers** that can break the world that bad people hav
 
 # Yes but... what about Jehanne?
 
-All these facts made me realize that existing copylefts cannot serve
-hackers' curiosity, so I studied Copyright regulations to mitigate
+All these facts made me realize that existing copylefts cannot serve neither
+hackers' curiosity nor people's Freedom, so I studied Copyright regulations to mitigate
 the issues I saw with them. The result is the [Hacking License](http://www.tesio.it/documents/HACK.txt)
 that is going to replace AGPLv3 as my copyleft of choice.
 

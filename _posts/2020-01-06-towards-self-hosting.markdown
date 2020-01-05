@@ -1,20 +1,20 @@
 ---
 layout: post
 title: Towards self hosting
-public: false
+public: true
 author: giacomo
 ---
 # Ekaitz on board
 
-The most important success for Jehanne in 2019 is Ekaitz joining the development.
+The most important news for Jehanne in 2019, has been Ekaitz joining the development.
 
-Ekaitz is a hacker and an entrepreneur](https://elenq.tech/en/) and he is working to [port Jehanne's development tools](https://github.com/JehanneOS/devtools/commits/chibi) from Go to [Chibi-Scheme](http://synthcode.com/wiki/chibi-scheme).
+Ekaitz is a hacker and [an entrepreneur](https://elenq.tech/en/) and he is working to [port Jehanne's development tools](https://github.com/JehanneOS/devtools/commits/chibi) from Go to [Chibi-Scheme](http://synthcode.com/wiki/chibi-scheme).
 
 Even if I don't exclude a Go port to Jehanne in the far future, this is important to reduce the complexity of the base operating system. Having the development tools in Chibi will reduce the effort to be totally self-hosted when the GCC port will be ready (hopefully soon).
 
 # GCC 9.2.0
 
-While having a new hacker in the crew has been a great achievement for Jehanne, during 2019 my work on Jehanne slowed down a lot.  
+While having another hacker in the crew is great for Jehanne, during 2019 my work slowed down a lot.  
 
 For several months I've been an active member of the Italian Pirate Party, just to realize that there is no space for hackers there (or for anybody who care about freedom and knowledge). Unfortunately learning this lesson required a huge waste of energy and free time.
 
@@ -29,5 +29,5 @@ However I'm still having issues with C++ programs (like GCC itself, WTF!) so I d
 
 It's not such an achievement, but running GCC on Jehanne is an first step towards self-hosting, proving the quality of the LibPOSIX approach. It also forced me to face and fix some of the errors I did in early stages of Jehanne development. I'll wrote more about such errors when the port will be complete, but the most evident ones have been a complete revision of user-space system calls, the rename of libc to libjehanne (to free `libc` for standard compliant C libraries) and a complete rewrite of the cross-compiler generation (moved outside the source tree).
 
-There is a lot more work to do to reach self-hosting, but... this is a long term hack.
+There is a lot more work to do to reach self-hosting, but... this is a [long-term hack](https://github.com/JehanneOS/jehanne/blob/master/POLITICS.md).
 

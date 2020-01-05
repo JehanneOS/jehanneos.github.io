@@ -13,11 +13,11 @@ The most important news for Jehanne in 2019, has been Ekaitz joining the develop
 
 Ekaitz is a hacker and [an entrepreneur](https://elenq.tech/en/) and he is working to [port Jehanne's development tools](https://github.com/JehanneOS/devtools/commits/chibi) from Go to [Chibi-Scheme](http://synthcode.com/wiki/chibi-scheme).
 
-Even if I don't exclude a Go port to Jehanne in the far future, this is important to reduce the complexity of the base operating system. Having the development tools in Chibi will reduce the effort to be totally self-hosted when the GCC port will be ready (hopefully soon).
+Even if I don't exclude a Go port to Jehanne in the far future, this is important to reduce the complexity of the base operating system. Having the development tools in Chibi will simplify self-hosting when the GCC port will be ready (hopefully soon).
 
 # GCC 9.2.0
 
-While having another hacker in the crew is great for Jehanne, during 2019 my work slowed down a lot.  
+While having another hacker in the crew is great, during 2019 my work slowed down a lot.  
 
 For several months I've been an active member of the Italian Pirate Party, just to realize that there is no space for hackers there (or for anybody who care about freedom and knowledge). Unfortunately learning this lesson required a huge waste of energy and free time.
 

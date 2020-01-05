@@ -27,7 +27,7 @@ In the remaining time I worked to port GCC 9.2.0 to Jehanne and, as this screens
 As you can see, GCC can compile C programs on Jehanne.  
 However I'm still having issues with C++ programs (like GCC itself, WTF!) so I didn't published the port yet.
 
-It's not such an achievement, but having GCC running on Jehanne is an important step towards self-hosting, proving the quality of the LibPOSIX approach and forced me to face and fix some of the errors I did in early stages of Jehanne development. I'll wrote more about such errors when the port will be complete, but the most evident ones have been a complete revision of user-space system calls, the rename of libc to libjehanne (to free `libc` for standard compliant C libraries) and a complete rewrite of the cross-compiler generation (moved outside the source tree).
+It's not such an achievement, but running GCC on Jehanne is an first step towards self-hosting, proving the quality of the LibPOSIX approach. It also forced me to face and fix some of the errors I did in early stages of Jehanne development. I'll wrote more about such errors when the port will be complete, but the most evident ones have been a complete revision of user-space system calls, the rename of libc to libjehanne (to free `libc` for standard compliant C libraries) and a complete rewrite of the cross-compiler generation (moved outside the source tree).
 
 There is a lot more work to do to reach self-hosting, but... this is a long term hack.
 

@@ -4,6 +4,9 @@ title: Towards self hosting
 public: true
 author: giacomo
 ---
+
+Here we are, another year is gone.
+
 # Ekaitz on board
 
 The most important news for Jehanne in 2019, has been Ekaitz joining the development.

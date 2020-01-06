@@ -9,7 +9,7 @@ Here we are, another year is gone.
 
 # Ekaitz on board
 
-The most important news for Jehanne in 2019, has been Ekaitz joining the development.
+The most important news for Jehanne in 2019, has been [Ekaitz](https://github.com/ekaitz-zarraga) joining the development.
 
 Ekaitz is a hacker and [an entrepreneur](https://elenq.tech/en/) and he is working to [port Jehanne's development tools](https://github.com/JehanneOS/devtools/commits/chibi) from Go to [Chibi-Scheme](http://synthcode.com/wiki/chibi-scheme).
 
